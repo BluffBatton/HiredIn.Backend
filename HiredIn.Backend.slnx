@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="HiredIn.Backend.API/HiredIn.Backend.API.csproj" />
+  <Project Path="HiredIn.Backend.Application/HiredIn.Backend.Application.csproj" Id="2b040588-7fba-451f-aa98-4ee88945eb0b" />
+  <Project Path="HiredIn.Backend.Contracts/HiredIn.Backend.Contracts.csproj" Id="65542300-2b73-4088-9a90-db8ce119ee70" />
+  <Project Path="HiredIn.Backend.Domain/HiredIn.Backend.Domain.csproj" Id="b4f766f0-f06b-48a6-9d1d-7309c267540b" />
+  <Project Path="HiredIn.Backend.Infrastructure/HiredIn.Backend.Infrastructure.csproj" Id="e2fb7b4d-9f9f-4804-90bb-b26d8dd91776" />
+</Solution>
