@@ -1,9 +1,8 @@
 ﻿namespace HiredIn.Backend.Domain.Enums
 {
-    public enum UserStatus
+    public enum ChatStatus
     {
         Active = 1,
-        Blocked = 2,
-        Deleted = 3
+        Closed = 2
     }
 }
