@@ -1,6 +1,8 @@
-﻿namespace HiredIn.Backend.Domain.Entities
+﻿using HiredIn.Backend.Domain.Common;
+
+namespace HiredIn.Backend.Domain.Entities
 {
-    public class FavouriteVacancy
+    public class FavouriteVacancy : BaseEntity
     {
         public Guid UserId { get; set; }
         public Guid VacancyId { get; set; }
