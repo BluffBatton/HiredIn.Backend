@@ -8,9 +8,12 @@ namespace HiredIn.Backend.Infrastructure.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<ResumeSkill> builder)
         {
+            builder.ToTable("ResumeSkills");
+
             builder.HasKey(rs => new { rs.ResumeId, rs.SkillId });
 
             builder.Property(rs => rs.Level)
+                   .HasConversion<string>()
                    .IsRequired();
 
             builder.HasOne(rs => rs.Resume)
@@ -21,7 +24,7 @@ namespace HiredIn.Backend.Infrastructure.Persistence.Configuration
             builder.HasOne(rs => rs.Skill)
                    .WithMany(s => s.ResumeSkills)
                    .HasForeignKey(rs => rs.SkillId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

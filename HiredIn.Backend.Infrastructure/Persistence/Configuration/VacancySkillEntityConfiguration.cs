@@ -8,6 +8,8 @@ namespace HiredIn.Backend.Infrastructure.Persistence.Configuration
     {
         public void Configure(EntityTypeBuilder<VacancySkill> builder)
         {
+            builder.ToTable("VacancySkills");
+
             builder.HasKey(vs => new { vs.VacancyId, vs.SkillId });
 
             builder.Property(vs => vs.IsRequired)
@@ -21,7 +23,7 @@ namespace HiredIn.Backend.Infrastructure.Persistence.Configuration
             builder.HasOne(vs => vs.Skill)
                    .WithMany(s => s.VacancySkills)
                    .HasForeignKey(vs => vs.SkillId)
-                   .OnDelete(DeleteBehavior.Cascade);
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

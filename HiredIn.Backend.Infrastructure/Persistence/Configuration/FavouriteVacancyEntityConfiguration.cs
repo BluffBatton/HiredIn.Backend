@@ -1,16 +1,13 @@
 using HiredIn.Backend.Domain.Entities;
-using HiredIn.Backend.Infrastructure.Persistence.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HiredIn.Backend.Infrastructure.Persistence.Configuration
 {
-    internal class FavouriteVacancyEntityConfiguration : BaseEntityConfiguration<FavouriteVacancy>
+    internal class FavouriteVacancyEntityConfiguration : IEntityTypeConfiguration<FavouriteVacancy>
     {
-        public override void Configure(EntityTypeBuilder<FavouriteVacancy> builder)
+        public void Configure(EntityTypeBuilder<FavouriteVacancy> builder)
         {
-            base.Configure(builder);
-
             builder.ToTable("FavouriteVacancies");
 
             builder.HasKey(fv => new { fv.UserId, fv.VacancyId });
