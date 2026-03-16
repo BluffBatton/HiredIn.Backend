@@ -4,7 +4,7 @@ using HiredIn.Backend.Application.Interfaces;
 
 namespace HiredIn.Backend.Infrastructure.Persistence
 {
-    internal class ApplicationDbContext : DbContext, IApplicationDbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

@@ -1,22 +1,56 @@
+using HiredIn.Backend.Application;
+using HiredIn.Backend.Application.Interfaces;
+using HiredIn.Backend.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Microsoft.Extensions.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services
+    .AddPersistence(builder.Configuration);
 
-builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: true)
+        );
+    });
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// Swagger для раннего этапа можно оставить всегда включённым
+app.UseSwagger();
+app.UseSwaggerUI();
+
+// Простой health-check для Render
+app.MapGet("/health", () => Results.Ok("OK"));
+
+// Автомиграции только по флагу
+var runMigrations = builder.Configuration.GetValue<bool>("RunMigrations");
+if (runMigrations)
 {
-    app.MapOpenApi();
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
+app.UseCors("AllowAllOrigins");
 
 app.MapControllers();
 
