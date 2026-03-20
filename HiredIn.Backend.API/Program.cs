@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
+using HiredIn.Backend.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
-    .AddPersistence(builder.Configuration);
+    .AddPersistence(builder.Configuration)
+    .AddAuth(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
@@ -34,18 +36,13 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Swagger для раннего этапа можно оставить всегда включённым
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Простой health-check для Render
 app.MapGet("/health", () => Results.Ok("OK"));
 
-// Автомиграции только по флагу
-var runMigrations = builder.Configuration.GetValue<bool>("RunMigrations");
-if (runMigrations)
+using (var scope = app.Services.CreateScope())
 {
-    using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.Migrate();
 }

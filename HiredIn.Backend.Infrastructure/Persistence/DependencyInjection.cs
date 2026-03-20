@@ -1,9 +1,14 @@
 ﻿using HiredIn.Backend.Application.Interfaces;
+using HiredIn.Backend.Infrastructure.Integration;
+using HiredIn.Backend.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
-namespace HiredIn.Backend.Infrastructure.Persistence
+namespace HiredIn.Backend.Infrastructure
 {
     public static class DependencyInjection
     {
@@ -19,6 +24,45 @@ namespace HiredIn.Backend.Infrastructure.Persistence
 
             services.AddScoped<IApplicationDbContext>(provider =>
                 provider.GetRequiredService<ApplicationDbContext>());
+
+            return services;
+        }
+
+        public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<IJwtService, JwtService>();
+            services.AddScoped<IPasswordHasherService, PasswordHasherService>();
+            services.AddScoped<IUserContextService, UserContextService>();
+
+            var issuer = configuration["Jwt:Issuer"]
+                         ?? throw new InvalidOperationException("Jwt:Issuer is missing");
+            var audience = configuration["Jwt:Audience"]
+                           ?? throw new InvalidOperationException("Jwt:Audience is missing");
+            var key = configuration["Jwt:Key"]
+                      ?? throw new InvalidOperationException("Jwt:Key is missing");
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = issuer,
+
+                        ValidateAudience = true,
+                        ValidAudience = audience,
+
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
+
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
+            services.AddAuthorization();
 
             return services;
         }
