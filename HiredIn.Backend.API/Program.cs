@@ -1,17 +1,17 @@
 using HiredIn.Backend.Application;
-using HiredIn.Backend.Application.Interfaces;
+using HiredIn.Backend.Infrastructure;
 using HiredIn.Backend.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.Extensions.DependencyInjection;
-using HiredIn.Backend.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddPersistence(builder.Configuration)
-    .AddAuth(builder.Configuration);
+    .AddAuth(builder.Configuration)
+    .AddApplicationLayer();
 
 builder.Services.AddCors(options =>
 {
@@ -32,7 +32,31 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "HiredIn API",
+        Version = "v1"
+    });
+
+    const string schemeId = "Bearer";
+
+    options.AddSecurityDefinition(schemeId, new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "JWT access token",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
+    });
+
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference(schemeId, document)] = []
+    });
+});
 
 var app = builder.Build();
 
@@ -48,6 +72,9 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseCors("AllowAllOrigins");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
