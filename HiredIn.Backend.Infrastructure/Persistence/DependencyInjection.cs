@@ -30,6 +30,7 @@ namespace HiredIn.Backend.Infrastructure
 
         public static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.SectionName));
             services.AddHttpContextAccessor();
 
             services.AddScoped<IJwtService, JwtService>();
@@ -42,6 +43,8 @@ namespace HiredIn.Backend.Infrastructure
                            ?? throw new InvalidOperationException("Jwt:Audience is missing");
             var key = configuration["Jwt:Key"]
                       ?? throw new InvalidOperationException("Jwt:Key is missing");
+
+
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
