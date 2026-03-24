@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 namespace HiredIn.Backend.Infrastructure.Integration
 {
@@ -19,6 +20,23 @@ namespace HiredIn.Backend.Infrastructure.Integration
 
         public string GenerateAccessToken(User user)
         {
+            if (_jwtOptions == null)
+                throw new Exception("JwtOptions is null");
+
+            if (string.IsNullOrWhiteSpace(_jwtOptions.Key))
+                throw new Exception("JwtOptions.Key is null or empty");
+
+            if (string.IsNullOrWhiteSpace(_jwtOptions.Issuer))
+                throw new Exception("JwtOptions.Issuer is null or empty");
+
+            if (string.IsNullOrWhiteSpace(_jwtOptions.Audience))
+                throw new Exception("JwtOptions.Audience is null or empty");
+
+            if (_jwtOptions.ExpirationMinutes <= 0)
+                throw new Exception($"JwtOptions.ExpirationMinutes is invalid: {_jwtOptions.ExpirationMinutes}");
+
+            throw new Exception(JsonSerializer.Serialize(_jwtOptions));
+
             var claims = new List<Claim>
             {
                 new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
