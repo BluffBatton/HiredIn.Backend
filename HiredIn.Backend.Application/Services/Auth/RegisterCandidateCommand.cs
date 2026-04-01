@@ -53,7 +53,7 @@ namespace HiredIn.Backend.Application.Services.Auth
             await _context.Users.AddAsync(user, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
-            var candidateProfile = _mapper.Map<CandidateProfile>(request.Register);
+            var candidateProfile = _mapper.Map<Domain.Entities.CandidateProfile>(request.Register);
             candidateProfile.UserId = user.Id;
             candidateProfile.OpenToWork = true;
             candidateProfile.CreatedAtUtc = DateTime.UtcNow;

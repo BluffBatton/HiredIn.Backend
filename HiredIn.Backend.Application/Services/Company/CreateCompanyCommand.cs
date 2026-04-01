@@ -57,7 +57,7 @@ namespace HiredIn.Backend.Application.Services.Company
             await _context.Companies.AddAsync(company, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
-            var companyMember = new CompanyMember
+            var companyMember = new Domain.Entities.CompanyMember
             {
                 CompanyId = company.Id,
                 UserId = currentUserId.Value,
