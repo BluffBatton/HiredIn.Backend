@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace HiredIn.Backend.API.Controllers
 {
     [Route("api/skill")]
+    [Authorize]
+
     public class SkillController : BaseController
     {
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<SkillReadDTO>> Create(
             [FromBody] SkillCreateDTO dto,
             CancellationToken cancellationToken)
@@ -20,7 +21,6 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        [Authorize]
         public async Task<ActionResult<SkillReadDTO>> GetById(
             Guid id,
             CancellationToken cancellationToken)
@@ -30,7 +30,6 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<List<SkillReadDTO>>> GetAll(CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(new GetSkillsQuery(), cancellationToken);
@@ -38,7 +37,6 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPatch("{id:guid}")]
-        [Authorize]
         public async Task<IActionResult> Patch(
             Guid id,
             [FromBody] SkillPatchDTO dto,
@@ -49,7 +47,6 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        [Authorize]
         public async Task<IActionResult> Delete(
             Guid id,
             CancellationToken cancellationToken)
