@@ -1,5 +1,6 @@
 ﻿using HiredIn.Backend.API.Common;
 using HiredIn.Backend.Application.Services.CompanyMember;
+using HiredIn.Backend.Contracts.DTOs.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,6 +37,14 @@ namespace HiredIn.Backend.API.Controllers
         public async Task<IActionResult> DeleteCompanyMember(Guid id)
         {
             var command = new DeleteCompanyMemberCommand(id);
+            await Mediator.Send(command);
+            return Ok();
+        }
+
+        [HttpPatch("{id:guid}, {role}")]
+        public async Task<IActionResult> PatchCompanyMemberRole(Guid id, CompanyMemberRole role)
+        {
+            var command = new PatchCompanyMemberRoleCommand(id, role);
             await Mediator.Send(command);
             return Ok();
         }

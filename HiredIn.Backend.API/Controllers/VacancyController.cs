@@ -1,4 +1,5 @@
 ﻿using HiredIn.Backend.API.Common;
+using HiredIn.Backend.Application.Common.Models;
 using HiredIn.Backend.Application.Services.Vacancy;
 using HiredIn.Backend.Contracts.DTOs.VacancyDTOs;
 using Microsoft.AspNetCore.Authorization;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HiredIn.Backend.API.Controllers
 {
-    [Route("api/vacancy")]
     public class VacancyController : BaseController
     {
         [HttpPost]
@@ -55,6 +55,33 @@ namespace HiredIn.Backend.API.Controllers
             CancellationToken cancellationToken)
         {
             await Mediator.Send(new DeleteVacancyCommand(vacancyId), cancellationToken);
+            return NoContent();
+        }
+
+        [HttpGet("paged")]
+        [AllowAnonymous]
+        public async Task<ActionResult<PaginatedList<VacancyReadDTO>>> GetPaged(
+            [FromQuery] int page = 0,
+            [FromQuery] int pageSize = 10,
+            CancellationToken cancellationToken = default)
+        {
+            var result = await Mediator.Send(new GetPagedVacanciesQuery { Page = page, PageSize = pageSize }, cancellationToken);
+            return Ok(result);
+        }
+
+        [HttpPatch("{id:guid}/archive")]
+        [Authorize(Roles = "Employer")]
+        public async Task<IActionResult> ArchiveVacancy(Guid id)
+        {
+            await Mediator.Send(new ArchiveVacancyCommand(id));
+            return NoContent();
+        }
+
+        [HttpPatch("{id:guid}/unarchive")]
+        [Authorize(Roles = "Employer")]
+        public async Task<IActionResult> UnarchiveVacancy(Guid id)
+        {
+            await Mediator.Send(new UnarchiveVacancyCommand(id));
             return NoContent();
         }
     }
