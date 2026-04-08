@@ -84,5 +84,13 @@ namespace HiredIn.Backend.API.Controllers
             await Mediator.Send(new UnarchiveVacancyCommand(id));
             return NoContent();
         }
+
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<VacancyReadDTO>> GetPublicVacanciesById(Guid id)
+        {
+            var result = await Mediator.Send(new GetPublicVacancyByIdQuery(id));
+            return Ok(result);
+        }
     }
 }
