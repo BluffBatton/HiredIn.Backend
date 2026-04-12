@@ -31,11 +31,3 @@ namespace HiredIn.Backend.Application.Mappings.UpdateMapping
         }
     }
 }
-using System.Text;
-
-namespace HiredIn.Backend.Application.Mappings.UpdateMapping
-{
-    internal class VacancyUpdateMapping
-    {
-    }
-}
