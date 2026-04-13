@@ -63,6 +63,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddSignalR();
+builder.Services.AddScoped<IChatRealtimeService, ChatRealtimeService>();
+
 var app = builder.Build();
 
 app.UseSwagger();
