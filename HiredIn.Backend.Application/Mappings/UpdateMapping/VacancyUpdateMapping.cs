@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using HiredIn.Backend.Contracts.DTOs.VacancyDTOs;
 using DomainVacancy = HiredIn.Backend.Domain.Entities.Vacancy;
 

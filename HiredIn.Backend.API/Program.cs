@@ -1,4 +1,7 @@
+using HiredIn.Backend.API.Hubs;
+using HiredIn.Backend.API.Services;
 using HiredIn.Backend.Application;
+using HiredIn.Backend.Application.Interfaces;
 using HiredIn.Backend.Infrastructure;
 using HiredIn.Backend.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -72,6 +75,11 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.Migrate();
 }
+
+builder.Services.AddSignalR();
+builder.Services.AddScoped<IChatRealtimeService, ChatRealtimeService>();
+
+app.MapHub<ChatHub>("/hubs/chat");
 
 app.UseCors("AllowAllOrigins");
 
