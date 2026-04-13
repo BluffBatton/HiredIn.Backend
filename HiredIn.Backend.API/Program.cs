@@ -79,9 +79,6 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
-builder.Services.AddSignalR();
-builder.Services.AddScoped<IChatRealtimeService, ChatRealtimeService>();
-
 app.MapHub<ChatHub>("/hubs/chat");
 
 app.UseCors("AllowAllOrigins");
