@@ -13,6 +13,7 @@ namespace HiredIn.Backend.Domain.Entities
         public string? LogoUrl { get; set; }
         public CompanyStatus Status { get; set; }
 
+        public ICollection<CompanyRating> CompanyRatings { get; set; } = new List<CompanyRating>();
         public ICollection<CompanyMember> Members { get; set; } = new List<CompanyMember>();
         public ICollection<Vacancy> Vacancies { get; set; } = new List<Vacancy>();
     }

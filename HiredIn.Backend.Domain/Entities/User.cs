@@ -20,6 +20,7 @@ namespace HiredIn.Backend.Domain.Entities
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
         public ICollection<FavouriteVacancy> FavouriteVacancies { get; set; } = new List<FavouriteVacancy>();
         public ICollection<ChatParticipant> ChatParticipants { get; set; } = new List<ChatParticipant>();
+        public ICollection<CompanyRating> CompanyRatings { get; set; } = new List<CompanyRating>();
 
     }
 }

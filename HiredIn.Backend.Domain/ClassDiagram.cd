@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HiredIn.Backend.Domain.Common.BaseEntity" Collapsed="true">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAAA=</HashCode>
+      <FileName>Common\BaseEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.Application" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAFAAAAAAAACAAAAAAAAAIAAAgAAAAABAgAAAA=</HashCode>
+      <FileName>Entities\Application.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.CandidateProfile" Collapsed="true">
+    <Position X="13.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAEIAAAAAAgAAAAAAABAAAAEAAAAAAA=</HashCode>
+      <FileName>Entities\CandidateProfile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.Chat" Collapsed="true">
+    <Position X="17.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEABAAAAAAAQAAAAAAAAAAAAAAACAAAQAAAAA=</HashCode>
+      <FileName>Entities\Chat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.ChatParticipant" Collapsed="true">
+    <Position X="36" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAgAAAAAAAgAAAAAAAAAAAQ=</HashCode>
+      <FileName>Entities\ChatParticipant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.Company" Collapsed="true">
+    <Position X="29" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAEAAgggAEIAAAAAAQAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Entities\Company.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.CompanyMember" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAIAAAAAEAAAAAgAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Entities\CompanyMember.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.FavouriteVacancy" Collapsed="true">
+    <Position X="11" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAACAAAAAgAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Entities\FavouriteVacancy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.Message" Collapsed="true">
+    <Position X="15.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAEAAAAAAAAAkAAAAACAAAAAQ=</HashCode>
+      <FileName>Entities\Message.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.Notification" Collapsed="true">
+    <Position X="20" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAEAAAAAAEAgAAAAAAAAAAQAACAAAAAA=</HashCode>
+      <FileName>Entities\Notification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.Resume" Collapsed="true">
+    <Position X="24.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUCAAAAAYBgAAEAQAAAAAAAIAAAQAAAAAAACAAAAABY=</HashCode>
+      <FileName>Entities\Resume.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.ResumeEducation" Collapsed="true">
+    <Position X="31.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAgAIAAAAAAAAAwAAAAAAAAAAAQAEgAAAA=</HashCode>
+      <FileName>Entities\ResumeEducation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.ResumeFile" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAhAAAA=</HashCode>
+      <FileName>Entities\ResumeFile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.ResumeSkill" Collapsed="true">
+    <Position X="37.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAABAAAAAAAAAAAAAAAAAAAAAQABAAAAAAgAAAA=</HashCode>
+      <FileName>Entities\ResumeSkill.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.ResumeWorkExperience" Collapsed="true">
+    <Position X="39.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAABAAAgQAAAAAAAAAAgAAAAAAAAAAAAAEgAAAA=</HashCode>
+      <FileName>Entities\ResumeWorkExperience.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.Skill" Collapsed="true">
+    <Position X="22.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAACAEAAAAA=</HashCode>
+      <FileName>Entities\Skill.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.User" Collapsed="true">
+    <Position X="26.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAEAEACAgAAAMEACAYAAAACAAAAAAAAAAAAAAAAw=</HashCode>
+      <FileName>Entities\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.Vacancy" Collapsed="true">
+    <Position X="33.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEABogCEAcAAAIAAAAAAAQAAAAAAAABEAAAAA=</HashCode>
+      <FileName>Entities\Vacancy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HiredIn.Backend.Domain.Entities.VacancySkill" Collapsed="true">
+    <Position X="41.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAACAAAAAAgAAAAAQAAAAAABAAAAAA=</HashCode>
+      <FileName>Entities\VacancySkill.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="HiredIn.Backend.Domain.Enums.ApplicationStatus" Collapsed="true">
+    <Position X="36" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAQAEAAAAAAAACAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\ApplicationStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.ChatStatus" Collapsed="true">
+    <Position X="37.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAA=</HashCode>
+      <FileName>Enums\ChatStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.CompanyMemberRole" Collapsed="true">
+    <Position X="39.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Enums\CompanyMemberRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.CompanyStatus" Collapsed="true">
+    <Position X="41.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAIAAAAAAAgAAAAIAAAAAA=</HashCode>
+      <FileName>Enums\CompanyStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.EmploymentType" Collapsed="true">
+    <Position X="36" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAgAAAAAAIACAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Enums\EmploymentType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.ExperienceLevel" Collapsed="true">
+    <Position X="37.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAYAAAAAAA=</HashCode>
+      <FileName>Enums\ExperienceLevel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.NotificationType" Collapsed="true">
+    <Position X="39.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAEACAAAAAAAAAAAAAAAAAAAAAAAM=</HashCode>
+      <FileName>Enums\NotificationType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.ResumeVisibility" Collapsed="true">
+    <Position X="41.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAUAA=</HashCode>
+      <FileName>Enums\ResumeVisibility.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.SkillLevel" Collapsed="true">
+    <Position X="36" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAACAAQ=</HashCode>
+      <FileName>Enums\SkillLevel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.UserRole" Collapsed="true">
+    <Position X="37.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAQAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\UserRole.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.UserStatus" Collapsed="true">
+    <Position X="39.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAEAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\UserStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.VacancyStatus" Collapsed="true">
+    <Position X="41.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAACAAAAAAIAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Enums\VacancyStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="HiredIn.Backend.Domain.Enums.WorkFormat" Collapsed="true">
+    <Position X="36" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAAAQAAAAAAAAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\WorkFormat.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -15,6 +15,7 @@ namespace HiredIn.Backend.Application.Interfaces
         DbSet<Skill> Skills { get; }
         DbSet<Company> Companies { get; }
         DbSet<CompanyMember> CompanyMembers { get; }
+        DbSet<CompanyRating> CompanyRatings { get; }
         DbSet<Vacancy> Vacancies { get; }
         DbSet<VacancySkill> VacancySkills { get; }
         DbSet<Domain.Entities.Application> Applications { get; }

@@ -20,6 +20,7 @@ namespace HiredIn.Backend.Infrastructure.Persistence
         public DbSet<Skill> Skills { get; set; } = null!;
         public DbSet<Company> Companies { get; set; } = null!;
         public DbSet<CompanyMember> CompanyMembers { get; set; } = null!;
+        public DbSet<CompanyRating> CompanyRatings { get; set; } = null!;
         public DbSet<Vacancy> Vacancies { get; set; } = null!;
         public DbSet<VacancySkill> VacancySkills { get; set; } = null!;
         public DbSet<Domain.Entities.Application> Applications { get; set; } = null!;
