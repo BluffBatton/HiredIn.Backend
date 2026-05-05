@@ -42,7 +42,7 @@ namespace HiredIn.Backend.Application.Services.Auth
             if (userExists)
                 throw new InvalidOperationException($"User with email {request.Register.Email} already exists");
 
-            var user = _mapper.Map<User>(request.Register);
+            var user = _mapper.Map<Domain.Entities.User>(request.Register);
             user.Email = normalizedEmail;
             user.Role = UserRole.Employer;
             user.Status = UserStatus.Active;
