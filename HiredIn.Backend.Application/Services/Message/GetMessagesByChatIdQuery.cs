@@ -48,7 +48,7 @@ namespace HiredIn.Backend.Application.Services.Message
             var messages = await _context.Messages
                 .Where(m => m.ChatId == request.ChatId && m.DeletedAtUtc == null)
                 .Include(m => m.SenderUser)
-                .OrderByDescending(m => m.CreatedAtUtc)
+                .OrderBy(m => m.CreatedAtUtc)
                 .ToListAsync(cancellationToken);
 
             return _mapper.Map<List<MessageReadDTO>>(messages);
