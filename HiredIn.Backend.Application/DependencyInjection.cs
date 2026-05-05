@@ -1,5 +1,6 @@
 ﻿using HiredIn.Backend.Application.Interfaces;
 using HiredIn.Backend.Application.Services.Notification;
+using HiredIn.Backend.Application.Services.Recommendation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -12,6 +13,7 @@ namespace HiredIn.Backend.Application
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IVacancyRecommendationScoringService, VacancyRecommendationScoringService>();
             return services;
         }
     }

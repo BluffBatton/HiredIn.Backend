@@ -26,9 +26,14 @@ namespace HiredIn.Backend.Infrastructure
                 provider.GetRequiredService<ApplicationDbContext>());
 
             services.Configure<SupabaseStorageOptions>(
-    configuration.GetSection(SupabaseStorageOptions.SectionName));
+                configuration.GetSection(SupabaseStorageOptions.SectionName));
 
             services.AddScoped<IFileStorageService, SupabaseFileStorageService>();
+
+            services.Configure<OpenAiOptions>(
+                configuration.GetSection(OpenAiOptions.SectionName));
+
+            services.AddHttpClient<IOpenAiService, OpenAiService>();
 
             return services;
         }
