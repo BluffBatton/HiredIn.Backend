@@ -4,23 +4,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HiredIn.Backend.Application.Services.ResumeFile
 {
-    public class DeleteResumeFileCommand : IRequest
+    public class GetResumeFileUrlQuery : IRequest<string>
     {
         public Guid ResumeId { get; set; }
 
-        public DeleteResumeFileCommand(Guid resumeId)
+        public GetResumeFileUrlQuery(Guid resumeId)
         {
             ResumeId = resumeId;
         }
     }
 
-    public class DeleteResumeFileCommandHandler : IRequestHandler<DeleteResumeFileCommand>
+    public class GetResumeFileUrlQueryHandler : IRequestHandler<GetResumeFileUrlQuery, string>
     {
         private readonly IApplicationDbContext _context;
         private readonly IUserContextService _userContextService;
         private readonly IFileStorageService _fileStorageService;
 
-        public DeleteResumeFileCommandHandler(
+        public GetResumeFileUrlQueryHandler(
             IApplicationDbContext context,
             IUserContextService userContextService,
             IFileStorageService fileStorageService)
@@ -30,7 +30,7 @@ namespace HiredIn.Backend.Application.Services.ResumeFile
             _fileStorageService = fileStorageService;
         }
 
-        public async Task Handle(DeleteResumeFileCommand request, CancellationToken cancellationToken)
+        public async Task<string> Handle(GetResumeFileUrlQuery request, CancellationToken cancellationToken)
         {
             var currentUserId = _userContextService.GetCurrentUserId();
 
@@ -47,8 +47,7 @@ namespace HiredIn.Backend.Application.Services.ResumeFile
             if (resume == null)
                 throw new KeyNotFoundException("Resume not found.");
 
-            if (resume.CandidateProfile.UserId != currentUserId.Value)
-                throw new UnauthorizedAccessException("You can delete file only from your own resume.");
+            var isOwner = resume.CandidateProfile.UserId == currentUserId.Value;
 
             var resumeFile = await _context.ResumeFiles
                 .FirstOrDefaultAsync(rf =>
@@ -59,15 +58,28 @@ namespace HiredIn.Backend.Application.Services.ResumeFile
             if (resumeFile == null)
                 throw new KeyNotFoundException("Resume file not found.");
 
-            await _fileStorageService.DeleteAsync(
+            if (!isOwner)
+            {
+                var hasApplicationAccess = await _context.Applications
+                    .AnyAsync(a =>
+                        a.ResumeId == request.ResumeId &&
+                        a.DeletedAtUtc == null &&
+                        _context.CompanyMembers.Any(cm =>
+                            cm.CompanyId == a.Vacancy.CompanyId &&
+                            cm.UserId == currentUserId.Value),
+                        cancellationToken);
+
+                if (!hasApplicationAccess)
+                    throw new UnauthorizedAccessException("You do not have access to this resume file.");
+            }
+
+            var signedUrl = await _fileStorageService.CreateSignedUrlAsync(
                 "resume-files",
                 resumeFile.FileUrl,
+                300,
                 cancellationToken);
 
-            resumeFile.DeletedAtUtc = DateTime.UtcNow;
-            resumeFile.UpdatedAtUtc = DateTime.UtcNow;
-
-            await _context.SaveChangesAsync(cancellationToken);
+            return signedUrl;
         }
     }
 }

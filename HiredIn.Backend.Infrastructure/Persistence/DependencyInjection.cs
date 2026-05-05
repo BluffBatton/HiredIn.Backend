@@ -25,6 +25,11 @@ namespace HiredIn.Backend.Infrastructure
             services.AddScoped<IApplicationDbContext>(provider =>
                 provider.GetRequiredService<ApplicationDbContext>());
 
+            services.Configure<SupabaseStorageOptions>(
+    configuration.GetSection(SupabaseStorageOptions.SectionName));
+
+            services.AddScoped<IFileStorageService, SupabaseFileStorageService>();
+
             return services;
         }
 
