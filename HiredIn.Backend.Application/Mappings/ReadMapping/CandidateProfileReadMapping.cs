@@ -5,7 +5,7 @@ namespace HiredIn.Backend.Application.Mappings.ReadMapping
 {
     public class CandidateProfileReadMapping : AutoMapper.Profile
     {
-        CandidateProfileReadMapping()
+        public CandidateProfileReadMapping()
         {
             CreateMap<CandidateProfile, CandidateProfileReadDTO>();
         }
