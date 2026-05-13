@@ -36,13 +36,13 @@ namespace HiredIn.Backend.API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("{companyId:guid}")]
+        [HttpDelete]
         public async Task<IActionResult> DeleteCompanyLogo(
             Guid companyId,
             CancellationToken cancellationToken)
         {
             await Mediator.Send(
-                new DeleteCompanyLogoCommand(companyId),
+                new DeleteCompanyLogoCommand(),
                 cancellationToken);
 
             return NoContent();

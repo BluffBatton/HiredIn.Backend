@@ -7,12 +7,12 @@ namespace HiredIn.Backend.Application.Services.Company
 {
     public class DeleteCompanyLogoCommand : IRequest
     {
-        public Guid CompanyId { get; set; }
+        //public Guid CompanyId { get; set; }
 
-        public DeleteCompanyLogoCommand(Guid companyId)
-        {
-            CompanyId = companyId;
-        }
+        //public DeleteCompanyLogoCommand(Guid companyId)
+        //{
+        //    CompanyId = companyId;
+        //}
     }
 
     public class DeleteCompanyLogoCommandHandler : IRequestHandler<DeleteCompanyLogoCommand>
@@ -38,9 +38,19 @@ namespace HiredIn.Backend.Application.Services.Company
             if (currentUserId == null)
                 throw new UnauthorizedAccessException("User is not authenticated.");
 
+            var usersCompanyId = await _context.CompanyMembers
+                .Where(cm => cm.UserId == currentUserId.Value)
+                .Select(cm => cm.CompanyId)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (usersCompanyId == Guid.Empty)
+                throw new KeyNotFoundException("User does not belong to any company.");
+
+
+
             var company = await _context.Companies
                 .FirstOrDefaultAsync(c =>
-                    c.Id == request.CompanyId &&
+                    c.Id == usersCompanyId &&
                     c.DeletedAtUtc == null,
                     cancellationToken);
 
@@ -49,7 +59,7 @@ namespace HiredIn.Backend.Application.Services.Company
 
             var membership = await _context.CompanyMembers
                 .FirstOrDefaultAsync(cm =>
-                    cm.CompanyId == request.CompanyId &&
+                    cm.CompanyId == usersCompanyId &&
                     cm.UserId == currentUserId.Value,
                     cancellationToken);
 
@@ -61,10 +71,10 @@ namespace HiredIn.Backend.Application.Services.Company
 
             var possiblePaths = new[]
             {
-                $"companies/{request.CompanyId}/logo.jpg",
-                $"companies/{request.CompanyId}/logo.jpeg",
-                $"companies/{request.CompanyId}/logo.png",
-                $"companies/{request.CompanyId}/logo.webp"
+                $"companies/{usersCompanyId}/logo.jpg",
+                $"companies/{usersCompanyId}/logo.jpeg",
+                $"companies/{usersCompanyId}/logo.png",
+                $"companies/{usersCompanyId}/logo.webp"
             };
 
             foreach (var path in possiblePaths)
