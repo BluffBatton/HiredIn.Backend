@@ -7,7 +7,7 @@ namespace HiredIn.Backend.Application.Interfaces
         int CalculateScore(
             Resume resume,
             Vacancy vacancy,
-            List<string> vacancySkills,
+            List<VacancySkill> vacancySkills,
             List<string> matchedSkills);
     }
 }

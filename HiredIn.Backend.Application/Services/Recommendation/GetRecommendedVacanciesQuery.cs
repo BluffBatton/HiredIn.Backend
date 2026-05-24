@@ -68,6 +68,14 @@ namespace HiredIn.Backend.Application.Services.Recommendation
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .ToList();
 
+            var appliedVacancyIds = await _context.Applications
+                .AsNoTracking()
+                .Where(a =>
+                    a.ResumeId == resume.Id &&
+                    a.DeletedAtUtc == null)
+                .Select(a => a.VacancyId)
+                .ToListAsync(cancellationToken);
+
             var vacancies = await _context.Vacancies
                 .AsNoTracking()
                 .Include(v => v.Company)
@@ -75,13 +83,20 @@ namespace HiredIn.Backend.Application.Services.Recommendation
                     .ThenInclude(vs => vs.Skill)
                 .Where(v =>
                     v.DeletedAtUtc == null &&
-                    v.Status == VacancyStatus.Published)
+                    v.Status == VacancyStatus.Published &&
+                    v.Company.DeletedAtUtc == null &&
+                    v.Company.Status == CompanyStatus.Active &&
+                    !appliedVacancyIds.Contains(v.Id))
                 .ToListAsync(cancellationToken);
 
             var recommendations = vacancies
                 .Select(vacancy =>
                 {
-                    var vacancySkills = vacancy.VacancySkills
+                    var activeVacancySkills = vacancy.VacancySkills
+                        .Where(vs => vs.Skill.DeletedAtUtc == null)
+                        .ToList();
+
+                    var vacancySkills = activeVacancySkills
                         .Select(vs => vs.Skill.Name.Trim())
                         .Where(s => !string.IsNullOrWhiteSpace(s))
                         .Distinct(StringComparer.OrdinalIgnoreCase)
@@ -98,7 +113,7 @@ namespace HiredIn.Backend.Application.Services.Recommendation
                     var score = _scoringService.CalculateScore(
                         resume,
                         vacancy,
-                        vacancySkills,
+                        activeVacancySkills,
                         matchedSkills);
 
                     return new VacancyRecommendationReadDTO

@@ -7,14 +7,19 @@ namespace HiredIn.Backend.Application.Services.Recommendation
         public int CalculateScore(
             Domain.Entities.Resume resume,
             Domain.Entities.Vacancy vacancy,
-            List<string> vacancySkills,
+            List<Domain.Entities.VacancySkill> vacancySkills,
             List<string> matchedSkills)
         {
             var score = 0;
 
             if (vacancySkills.Count > 0)
             {
-                var skillScore = (double)matchedSkills.Count / vacancySkills.Count * 50;
+                var totalSkillWeight = vacancySkills.Sum(vs => vs.IsRequired ? 2 : 1);
+                var matchedSkillWeight = vacancySkills
+                    .Where(vs => matchedSkills.Contains(vs.Skill.Name, StringComparer.OrdinalIgnoreCase))
+                    .Sum(vs => vs.IsRequired ? 2 : 1);
+
+                var skillScore = (double)matchedSkillWeight / totalSkillWeight * 50;
                 score += (int)Math.Round(skillScore);
             }
 
@@ -26,8 +31,7 @@ namespace HiredIn.Backend.Application.Services.Recommendation
             if (resume.EmploymentType == vacancy.EmploymentType)
                 score += 5;
 
-            if (resume.ExperienceLevel == vacancy.ExperienceLevel)
-                score += 10;
+            score += CalculateExperienceScore(resume.ExperienceLevel, vacancy.ExperienceLevel);
 
             if (!string.IsNullOrWhiteSpace(resume.CandidateProfile.City) &&
                 !string.IsNullOrWhiteSpace(vacancy.City) &&
@@ -40,6 +44,21 @@ namespace HiredIn.Backend.Application.Services.Recommendation
             }
 
             return Math.Min(score, 100);
+        }
+
+        private static int CalculateExperienceScore(
+            Domain.Enums.ExperienceLevel resumeExperience,
+            Domain.Enums.ExperienceLevel vacancyExperience)
+        {
+            var difference = Math.Abs((int)resumeExperience - (int)vacancyExperience);
+
+            return difference switch
+            {
+                0 => 10,
+                1 => 6,
+                2 => 3,
+                _ => 0
+            };
         }
 
         private static int CalculatePositionScore(string? desiredPosition, string vacancyTitle)
