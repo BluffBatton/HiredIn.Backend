@@ -19,7 +19,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<ActionResult<FavouriteVacancyReadDTO>> GetFavouriteVacancyById([FromBody] Guid id)
+        public async Task<ActionResult<FavouriteVacancyReadDTO>> GetFavouriteVacancyById(Guid id)
         {
             var query = new GetFavouriteVacancyByIdQuery(id);
             var result = await Mediator.Send(query);
@@ -35,7 +35,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> DeleteFavouriteVacancy([FromBody] Guid id)
+        public async Task<IActionResult> DeleteFavouriteVacancy(Guid id)
         {
             var command = new DeleteFavouriteVacancyCommand(id);
             await Mediator.Send(command);

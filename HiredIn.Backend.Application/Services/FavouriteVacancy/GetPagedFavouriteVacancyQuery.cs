@@ -1,6 +1,7 @@
-﻿using HiredIn.Backend.Application.Common.Models;
+using HiredIn.Backend.Application.Common.Models;
 using HiredIn.Backend.Application.Interfaces;
 using HiredIn.Backend.Contracts.DTOs.FavouriteVacancyDTOs;
+using HiredIn.Backend.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,6 @@ namespace HiredIn.Backend.Application.Services.FavouriteVacancy
     {
         public int Page { get; set; }
         public int PageSize { get; set; }
-
     }
 
     public class GetPagedFavouriteVacancyQueryHandler : IRequestHandler<GetPagedFavouriteVacancyQuery, PaginatedList<FavouriteVacancyReadDTO>>
@@ -43,11 +43,14 @@ namespace HiredIn.Backend.Application.Services.FavouriteVacancy
                 .Where(fv =>
                     fv.UserId == userId.Value &&
                     fv.DeletedAtUtc == null &&
-                    fv.Vacancy.DeletedAtUtc == null)
+                    fv.Vacancy.DeletedAtUtc == null &&
+                    fv.Vacancy.Status == VacancyStatus.Published &&
+                    fv.Vacancy.Company.DeletedAtUtc == null &&
+                    fv.Vacancy.Company.Status == CompanyStatus.Active)
                 .OrderByDescending(fv => fv.CreatedAtUtc)
                 .Select(fv => new FavouriteVacancyReadDTO
                 {
-                    Id = fv.Id,
+                    Id = fv.Id == Guid.Empty ? fv.VacancyId : fv.Id,
                     VacancyId = fv.VacancyId,
                     VacancyName = fv.Vacancy.Title,
                     CompanyName = fv.Vacancy.Company.Name,

@@ -1,4 +1,5 @@
 using HiredIn.Backend.API.Hubs;
+using HiredIn.Backend.API.Middleware;
 using HiredIn.Backend.API.Services;
 using HiredIn.Backend.Application;
 using HiredIn.Backend.Application.Interfaces;
@@ -68,6 +69,8 @@ builder.Services.AddScoped<IChatRealtimeService, ChatRealtimeService>();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseSwagger();
 app.UseSwaggerUI();
 
@@ -77,6 +80,7 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     db.Database.Migrate();
+    await AdminSeeder.SeedAsync(scope.ServiceProvider, app.Configuration);
 }
 app.UseCors("AllowAllOrigins");
 

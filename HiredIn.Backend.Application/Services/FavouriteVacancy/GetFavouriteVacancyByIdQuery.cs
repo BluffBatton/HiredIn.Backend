@@ -1,5 +1,6 @@
-﻿using HiredIn.Backend.Application.Interfaces;
+using HiredIn.Backend.Application.Interfaces;
 using HiredIn.Backend.Contracts.DTOs.FavouriteVacancyDTOs;
+using HiredIn.Backend.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,15 +36,23 @@ namespace HiredIn.Backend.Application.Services.FavouriteVacancy
             }
 
             var favouriteVacancyDto = await _context.FavouriteVacancies
-                .Where(fv => fv.Id == request.Id && fv.UserId == userId)
+                .AsNoTracking()
+                .Where(fv =>
+                    fv.UserId == userId.Value &&
+                    fv.DeletedAtUtc == null &&
+                    fv.Vacancy.DeletedAtUtc == null &&
+                    fv.Vacancy.Status == VacancyStatus.Published &&
+                    fv.Vacancy.Company.DeletedAtUtc == null &&
+                    fv.Vacancy.Company.Status == CompanyStatus.Active &&
+                    (fv.Id == request.Id || fv.VacancyId == request.Id))
                 .Select(fv => new FavouriteVacancyReadDTO
                 {
-                    Id = fv.Id,
+                    Id = fv.Id == Guid.Empty ? fv.VacancyId : fv.Id,
                     VacancyId = fv.VacancyId,
                     VacancyName = fv.Vacancy.Title ?? string.Empty,
                     CompanyName = fv.Vacancy.Company.Name ?? string.Empty,
                     City = fv.Vacancy.City ?? string.Empty,
-                    Salary = fv.Vacancy.SalaryMin 
+                    Salary = fv.Vacancy.SalaryMin
                 })
                 .FirstOrDefaultAsync(cancellationToken);
 
