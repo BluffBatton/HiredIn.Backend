@@ -41,8 +41,8 @@ namespace HiredIn.Backend.API.Controllers
             return Ok();
         }
 
-        [HttpPatch("{id:guid}, {role}")]
-        public async Task<IActionResult> PatchCompanyMemberRole(Guid id, CompanyMemberRole role)
+        [HttpPatch("{id:guid}/role")]
+        public async Task<IActionResult> PatchCompanyMemberRole(Guid id, [FromQuery] CompanyMemberRole role)
         {
             var command = new PatchCompanyMemberRoleCommand(id, role);
             await Mediator.Send(command);
