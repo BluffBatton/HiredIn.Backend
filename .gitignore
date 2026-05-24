@@ -362,3 +362,4 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /.codex-tmp/doc_extract
+/HiredIn.Backend.API/Controllers/DevController.cs
