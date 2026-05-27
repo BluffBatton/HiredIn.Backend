@@ -10,11 +10,22 @@ namespace HiredIn.Backend.API.Controllers
     public class ResumeController : BaseController
     {
         [HttpPost]
-        public async Task<IActionResult> CreateResume([FromBody] ResumeCreateDTO resume)
+        public async Task<ActionResult<Guid>> CreateResume(
+            [FromBody] ResumeCreateDTO resume,
+            CancellationToken cancellationToken)
         {
             var command = new CreateResumeCommand(resume);
-            await Mediator.Send(command);
-            return Ok();
+            var resumeId = await Mediator.Send(command, cancellationToken);
+
+            return Ok(resumeId);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<ResumeReadDTO>>> GetMyResumes(CancellationToken cancellationToken)
+        {
+            var resumes = await Mediator.Send(new GetMyResumesQuery(), cancellationToken);
+
+            return Ok(resumes);
         }
     }
 }

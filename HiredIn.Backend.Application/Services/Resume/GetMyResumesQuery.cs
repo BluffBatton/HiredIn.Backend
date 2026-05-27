@@ -40,7 +40,7 @@ namespace HiredIn.Backend.Application.Services.Resume
                 throw new KeyNotFoundException("Candidate profile not found.");
 
             var resumes = await _context.Resumes
-                .Where(r => r.CandidateProfileId == candidateProfile.Id)
+                .Where(r => r.CandidateProfileId == candidateProfile.Id && r.DeletedAtUtc == null)
                 .OrderByDescending(r => r.IsPrimary)
                 .ThenByDescending(r => r.UpdatedAtUtc)
                 .ToListAsync(cancellationToken);

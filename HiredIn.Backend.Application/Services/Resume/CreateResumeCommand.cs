@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HiredIn.Backend.Application.Services.Resume
 {
-    public class CreateResumeCommand : IRequest
+    public class CreateResumeCommand : IRequest<Guid>
     {
         public ResumeCreateDTO Resume { get; set; }
 
@@ -17,7 +17,7 @@ namespace HiredIn.Backend.Application.Services.Resume
         }
     }
 
-    public class CreateResumeCommandHandler : IRequestHandler<CreateResumeCommand>
+    public class CreateResumeCommandHandler : IRequestHandler<CreateResumeCommand, Guid>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -33,7 +33,7 @@ namespace HiredIn.Backend.Application.Services.Resume
             _userContextService = userContextService;
         }
 
-        public async Task Handle(CreateResumeCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateResumeCommand request, CancellationToken cancellationToken)
         {
             var currentUserId = _userContextService.GetCurrentUserId();
 
@@ -47,7 +47,7 @@ namespace HiredIn.Backend.Application.Services.Resume
                 throw new KeyNotFoundException("Candidate profile not found.");
 
             var existingResumes = await _context.Resumes
-                .Where(r => r.CandidateProfileId == candidateProfile.Id)
+                .Where(r => r.CandidateProfileId == candidateProfile.Id && r.DeletedAtUtc == null)
                 .ToListAsync(cancellationToken);
 
             if (request.Resume.IsPrimary)
@@ -70,7 +70,7 @@ namespace HiredIn.Backend.Application.Services.Resume
             await _context.Resumes.AddAsync(resume, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
-            return;
+            return resume.Id;
         }
     }
 }
