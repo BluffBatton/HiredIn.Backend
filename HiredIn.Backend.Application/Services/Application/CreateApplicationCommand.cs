@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HiredIn.Backend.Application.Services.Application
 {
-    public class CreateApplicationCommand : IRequest
+    public class CreateApplicationCommand : IRequest<ApplicationReadDTO>
     {
         public ApplicationCreateDTO Application { get; set; }
 
@@ -17,7 +17,7 @@ namespace HiredIn.Backend.Application.Services.Application
         }
     }
 
-    public class CreateApplicationCommandHandler : IRequestHandler<CreateApplicationCommand>
+    public class CreateApplicationCommandHandler : IRequestHandler<CreateApplicationCommand, ApplicationReadDTO>
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
@@ -36,7 +36,7 @@ namespace HiredIn.Backend.Application.Services.Application
             _notificationService = notificationService;
         }
 
-        public async Task Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
+        public async Task<ApplicationReadDTO> Handle(CreateApplicationCommand request, CancellationToken cancellationToken)
         {
             var currentUserId = _userContextService.GetCurrentUserId();
 
@@ -101,6 +101,16 @@ namespace HiredIn.Backend.Application.Services.Application
                     $"Кандидат подав заявку на вакансію \"{vacancy.Title}\".",
                     cancellationToken);
             }
+
+            var createdApplication = await _context.Applications
+                .Include(a => a.Vacancy)
+                    .ThenInclude(v => v.Company)
+                .Include(a => a.Resume)
+                    .ThenInclude(r => r.CandidateProfile)
+                        .ThenInclude(cp => cp.User)
+                .FirstAsync(a => a.Id == application.Id, cancellationToken);
+
+            return _mapper.Map<ApplicationReadDTO>(createdApplication);
         }
     }
 }

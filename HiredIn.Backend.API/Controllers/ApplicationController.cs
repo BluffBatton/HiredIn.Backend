@@ -11,12 +11,12 @@ namespace HiredIn.Backend.API.Controllers
     {
         [HttpPost]
         [Authorize(Roles = "Candidate")]
-        public async Task<IActionResult> CreateApplication(
+        public async Task<ActionResult<ApplicationReadDTO>> CreateApplication(
             [FromBody] ApplicationCreateDTO dto,
             CancellationToken cancellationToken)
         {
-            await Mediator.Send(new CreateApplicationCommand(dto), cancellationToken);
-            return Ok();
+            var result = await Mediator.Send(new CreateApplicationCommand(dto), cancellationToken);
+            return Ok(result);
         }
 
         [HttpGet]
@@ -59,13 +59,13 @@ namespace HiredIn.Backend.API.Controllers
 
         [HttpPatch("{applicationId:guid}/status")]
         [Authorize(Roles = "Employer")]
-        public async Task<IActionResult> UpdateApplicationStatus(
+        public async Task<ActionResult<ApplicationReadDTO>> UpdateApplicationStatus(
             Guid applicationId,
             [FromBody] ApplicationStatusUpdateDTO dto,
             CancellationToken cancellationToken)
         {
-            await Mediator.Send(new UpdateApplicationStatusCommand(applicationId, dto), cancellationToken);
-            return NoContent();
+            var result = await Mediator.Send(new UpdateApplicationStatusCommand(applicationId, dto), cancellationToken);
+            return Ok(result);
         }
     }
 }

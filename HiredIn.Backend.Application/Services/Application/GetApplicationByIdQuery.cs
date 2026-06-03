@@ -42,6 +42,7 @@ namespace HiredIn.Backend.Application.Services.Application
             var application = await _context.Applications
                 .Include(a => a.Resume)
                     .ThenInclude(r => r.CandidateProfile)
+                        .ThenInclude(cp => cp.User)
                 .Include(a => a.Vacancy)
                     .ThenInclude(v => v.Company)
                 .FirstOrDefaultAsync(a =>

@@ -1,5 +1,6 @@
 ﻿using HiredIn.Backend.Application.Interfaces;
 using HiredIn.Backend.Contracts.DTOs.ApplicationDTOs;
+using AutoMapper;
 using HiredIn.Backend.Contracts.DTOs.Enums;
 using HiredIn.Backend.Domain.Enums;
 using MediatR;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HiredIn.Backend.Application.Services.Application
 {
-    public class UpdateApplicationStatusCommand : IRequest
+    public class UpdateApplicationStatusCommand : IRequest<ApplicationReadDTO>
     {
         public Guid ApplicationId { get; set; }
         public ApplicationStatusUpdateDTO Status { get; set; }
@@ -19,23 +20,26 @@ namespace HiredIn.Backend.Application.Services.Application
         }
     }
 
-    public class UpdateApplicationStatusCommandHandler : IRequestHandler<UpdateApplicationStatusCommand>
+    public class UpdateApplicationStatusCommandHandler : IRequestHandler<UpdateApplicationStatusCommand, ApplicationReadDTO>
     {
         private readonly IApplicationDbContext _context;
+        private readonly IMapper _mapper;
         private readonly IUserContextService _userContextService;
         private readonly INotificationService _notificationService;
 
         public UpdateApplicationStatusCommandHandler(
             IApplicationDbContext context,
+            IMapper mapper,
             IUserContextService userContextService,
             INotificationService notificationService)
         {
             _context = context;
+            _mapper = mapper;
             _userContextService = userContextService;
             _notificationService = notificationService;
         }
 
-        public async Task Handle(UpdateApplicationStatusCommand request, CancellationToken cancellationToken)
+        public async Task<ApplicationReadDTO> Handle(UpdateApplicationStatusCommand request, CancellationToken cancellationToken)
         {
             var currentUserId = _userContextService.GetCurrentUserId();
 
@@ -44,8 +48,10 @@ namespace HiredIn.Backend.Application.Services.Application
 
             var application = await _context.Applications
                 .Include(a => a.Vacancy)
+                    .ThenInclude(v => v.Company)
                 .Include(a => a.Resume)
                     .ThenInclude(r => r.CandidateProfile)
+                        .ThenInclude(cp => cp.User)
                 .FirstOrDefaultAsync(a =>
                     a.Id == request.ApplicationId &&
                     a.DeletedAtUtc == null,
@@ -89,6 +95,8 @@ namespace HiredIn.Backend.Application.Services.Application
                 "Статус заявки змінено",
                 $"Статус вашої заявки на вакансію \"{application.Vacancy.Title}\" змінено на \"{application.Status}\".",
                 cancellationToken);
+
+            return _mapper.Map<ApplicationReadDTO>(application);
         }
     }
 }

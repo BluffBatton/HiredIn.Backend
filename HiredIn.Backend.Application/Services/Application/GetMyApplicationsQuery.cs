@@ -47,6 +47,8 @@ namespace HiredIn.Backend.Application.Services.Application
                 .Include(a => a.Vacancy)
                     .ThenInclude(v => v.Company)
                 .Include(a => a.Resume)
+                    .ThenInclude(r => r.CandidateProfile)
+                        .ThenInclude(cp => cp.User)
                 .OrderByDescending(a => a.CreatedAtUtc)
                 .ToListAsync(cancellationToken);
 
