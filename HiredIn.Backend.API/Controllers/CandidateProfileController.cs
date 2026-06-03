@@ -36,7 +36,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Employer,Admin")]
+        //[Authorize(Roles = "Employer,Admin")]
         public async Task<ActionResult<PaginatedList<CandidateSearchResultDTO>>> SearchCandidates(
             [FromQuery] string? searchText,
             [FromQuery] string? city,

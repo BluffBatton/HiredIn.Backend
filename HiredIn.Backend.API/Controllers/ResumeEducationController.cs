@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HiredIn.Backend.API.Controllers
 {
-    [Authorize(Roles = "Candidate")]
+    //[Authorize(Roles = "Candidate")]
     public class ResumeEducationController : BaseController
     {
         [HttpPost]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<ActionResult<Guid>> Create(
             [FromBody] ResumeEducationCreateDTO dto)
         {
@@ -26,7 +26,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet("by-resume/{resumeId:guid}")]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<ActionResult<List<ResumeEducationReadDTO>>> GetByResumeId(
             Guid resumeId)
         {
@@ -35,7 +35,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPatch("{id:guid}")]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<IActionResult> Patch(
             Guid id,
             [FromBody] ResumeEducationPatchDTO dto)

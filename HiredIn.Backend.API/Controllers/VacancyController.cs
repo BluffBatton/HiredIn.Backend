@@ -10,7 +10,7 @@ namespace HiredIn.Backend.API.Controllers
     public class VacancyController : BaseController
     {
         [HttpPost]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<ActionResult<Guid>> Create(
             [FromBody] VacancyCreateDTO dto,
             CancellationToken cancellationToken)
@@ -20,7 +20,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet("my")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<ActionResult<List<VacancyReadDTO>>> GetMy(CancellationToken cancellationToken)
         {
             var result = await Mediator.Send(new GetMyVacanciesQuery(), cancellationToken);
@@ -28,7 +28,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet("{vacancyId:guid}")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<ActionResult<VacancyReadDTO>> GetById(
             Guid vacancyId,
             CancellationToken cancellationToken)
@@ -38,7 +38,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPut("{vacancyId:guid}")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<IActionResult> Update(
             Guid vacancyId,
             [FromBody] VacancyUpdateDTO dto,
@@ -49,7 +49,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpDelete("{vacancyId:guid}")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<IActionResult> Delete(
             Guid vacancyId,
             CancellationToken cancellationToken)
@@ -70,7 +70,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPatch("{id:guid}/archive")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<IActionResult> ArchiveVacancy(Guid id)
         {
             await Mediator.Send(new ArchiveVacancyCommand(id));
@@ -78,7 +78,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPatch("{id:guid}/unarchive")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<IActionResult> UnarchiveVacancy(Guid id)
         {
             await Mediator.Send(new UnarchiveVacancyCommand(id));

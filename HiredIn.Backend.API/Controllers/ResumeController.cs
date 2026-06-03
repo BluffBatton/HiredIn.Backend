@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HiredIn.Backend.API.Controllers
 {
-    [Authorize(Roles="Candidate")]
+    //[Authorize(Roles="Candidate")]
     public class ResumeController : BaseController
     {
         [HttpPost]

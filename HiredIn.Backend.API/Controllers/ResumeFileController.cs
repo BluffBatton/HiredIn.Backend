@@ -10,7 +10,7 @@ namespace HiredIn.Backend.API.Controllers
     public class ResumeFileController : BaseController
     {
         [HttpPost]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<ActionResult<Guid>> Create(
             [FromBody] ResumeFileCreateDTO dto,
             CancellationToken cancellationToken)
@@ -20,7 +20,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet("by-resume/{resumeId:guid}")]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<ActionResult<ResumeFileReadDTO>> GetByResumeId(
             Guid resumeId,
             CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPatch("{id:guid}")]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<IActionResult> Patch(
             Guid id,
             [FromBody] ResumeFilePatchDTO dto,
@@ -41,7 +41,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<IActionResult> Delete(
             Guid id,
             CancellationToken cancellationToken)

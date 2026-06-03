@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HiredIn.Backend.API.Controllers
 {
-    [Authorize(Roles = "Employer")]
+    //[Authorize(Roles = "Employer")]
     public class CompanyMemberController : BaseController
     {
         [HttpPost]

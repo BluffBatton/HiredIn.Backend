@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HiredIn.Backend.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class ApplicationController : BaseController
     {
         [HttpPost]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<ActionResult<ApplicationReadDTO>> CreateApplication(
             [FromBody] ApplicationCreateDTO dto,
             CancellationToken cancellationToken)
@@ -20,7 +20,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<ActionResult<List<ApplicationReadDTO>>> GetMyApplications(
             CancellationToken cancellationToken)
         {
@@ -38,7 +38,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPatch("{applicationId:guid}/withdraw")]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<IActionResult> WithdrawApplication(
             Guid applicationId,
             CancellationToken cancellationToken)
@@ -48,7 +48,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet("{vacancyId:guid}/vacancy")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<ActionResult<List<ApplicationReadDTO>>> GetApplicationsByVacancyId(
             Guid vacancyId,
             CancellationToken cancellationToken)
@@ -58,7 +58,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPatch("{applicationId:guid}/status")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<ActionResult<ApplicationReadDTO>> UpdateApplicationStatus(
             Guid applicationId,
             [FromBody] ApplicationStatusUpdateDTO dto,

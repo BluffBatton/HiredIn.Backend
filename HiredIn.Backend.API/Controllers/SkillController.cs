@@ -12,7 +12,7 @@ namespace HiredIn.Backend.API.Controllers
     public class SkillController : BaseController
     {
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<ActionResult<SkillReadDTO>> Create(
             [FromBody] SkillCreateDTO dto,
             CancellationToken cancellationToken)
@@ -38,7 +38,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPatch("{id:guid}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Patch(
             Guid id,
             [FromBody] SkillPatchDTO dto,
@@ -49,7 +49,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(
             Guid id,
             CancellationToken cancellationToken)

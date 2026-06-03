@@ -10,7 +10,7 @@ namespace HiredIn.Backend.API.Controllers
     public class ResumeSkillController : BaseController
     {
         [HttpPost]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<ActionResult<ResumeSkillReadDTO>> Create(
             [FromBody] ResumeSkillCreateDTO dto,
             CancellationToken cancellationToken)
@@ -20,7 +20,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet("by-resume/{resumeId:guid}")]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<ActionResult<List<ResumeSkillReadDTO>>> GetByResumeId(
             Guid resumeId,
             CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPatch("{resumeId:guid}/{skillId:guid}")]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<IActionResult> Patch(
             Guid resumeId,
             Guid skillId,
@@ -42,7 +42,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpDelete("{resumeId:guid}/{skillId:guid}")]
-        [Authorize(Roles = "Candidate")]
+        //[Authorize(Roles = "Candidate")]
         public async Task<IActionResult> Delete(
             Guid resumeId,
             Guid skillId,

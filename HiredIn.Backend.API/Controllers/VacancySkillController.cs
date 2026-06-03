@@ -10,7 +10,7 @@ namespace HiredIn.Backend.API.Controllers
     public class VacancySkillController : BaseController
     {
         [HttpPost]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<ActionResult<VacancySkillReadDTO>> Create(
             [FromBody] VacancySkillCreateDTO dto,
             CancellationToken cancellationToken)
@@ -20,7 +20,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet("by-vacancy/{vacancyId:guid}")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<ActionResult<List<VacancySkillReadDTO>>> GetByVacancyId(
             Guid vacancyId,
             CancellationToken cancellationToken)
@@ -30,7 +30,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpPatch("{vacancyId:guid}/{skillId:guid}")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<IActionResult> Patch(
             Guid vacancyId,
             Guid skillId,
@@ -42,7 +42,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpDelete("{vacancyId:guid}/{skillId:guid}")]
-        [Authorize(Roles = "Employer")]
+        //[Authorize(Roles = "Employer")]
         public async Task<IActionResult> Delete(
             Guid vacancyId,
             Guid skillId,

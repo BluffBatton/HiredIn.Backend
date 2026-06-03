@@ -6,7 +6,7 @@ using HiredIn.Backend.Contracts.DTOs.CompanyDTOs;
 
 namespace HiredIn.Backend.API.Controllers
 {
-    [Authorize(Roles = "Employer")]
+    //[Authorize(Roles = "Employer")]
     public class CompanyController : BaseController
     {
         [HttpPost]

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HiredIn.Backend.API.Controllers
 {
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [Route("api/admin")]
     public class AdminController : ControllerBase
     {
