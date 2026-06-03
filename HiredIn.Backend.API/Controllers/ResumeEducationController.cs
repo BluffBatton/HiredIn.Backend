@@ -26,7 +26,7 @@ namespace HiredIn.Backend.API.Controllers
         }
 
         [HttpGet("by-resume/{resumeId:guid}")]
-        //[Authorize(Roles = "Candidate")]
+        [Authorize(Roles = "Candidate,Employer")]
         public async Task<ActionResult<List<ResumeEducationReadDTO>>> GetByResumeId(
             Guid resumeId)
         {
